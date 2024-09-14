@@ -6,14 +6,14 @@ RUN apt-get update && apt-get install -y \
     apache2 \
     php \
     php-mysql \
-    mysql-client \
-    wordpress
+    default-mysql-client \
+    wordpress \
+    wget curl
 
-# Copy the WordPress configuration file
-COPY wp-config.php /etc/wordpress/
+# Add ServerName to Apache configuration
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-# Expose port 80 for HTTP traffic
-EXPOSE 80
+EXPOSE 9000
 
 # Start Apache web server
 CMD ["apache2ctl", "-D", "FOREGROUND"]

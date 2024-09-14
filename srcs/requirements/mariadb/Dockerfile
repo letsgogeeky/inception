@@ -1,10 +1,13 @@
 FROM debian:stable
 
+# create directories for socket
+RUN mkdir -p /run/mysqld
+
 # Install MariaDB
 RUN apt-get update && apt-get install -y mariadb-server
 
 # Copy the MariaDB configuration file
-COPY my.cnf /etc/mysql/my.cnf
+COPY conf/my.cnf /etc/mysql/my.cnf
 
 # Expose the default MariaDB port
 EXPOSE 3306
