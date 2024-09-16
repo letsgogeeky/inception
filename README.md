@@ -4,12 +4,13 @@
 - When Docker raises a `no such file or directory` for volumes, try restarting Docker, yes, apparently restarting Docker solves the issue!!!!!!!
 - ALWAYS REMEMBER TO REMOVE VOLUMES WHEN THINGS GO WRONG WITH DB CONFIG, OTHERWISE YOU WILL KEEP GETTING THE SAME RESULTS WITHOUT KNOWING WHAT'S GOING ON!
 
-### Generate .env file:
-Simply use `genenv.sh` shell script
+### Generate .env file or use env_template:
+Simply use `genenv.py` script and follow along, most of the fields has default values except passwords.
 ```bash
-chmod +x genenv.sh
-./genenv.sh
+python genenv.py
 ```
+OR
+Modify env_template file on root directory to include your preferred values.
 
 
 ### Working with Maria db:

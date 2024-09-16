@@ -38,9 +38,14 @@ ssh-db:
 ssh-wp:
 	docker exec -it ${WP_CONTAINER_NAME} bash
 
+ssh-redis:
+	docker exec -it ${REDIS_CONTAINER_NAME} bash
+
 re: stop build-nc start
 
 $(DATA):
 	mkdir -p $(DATA)
 	mkdir -p $(DATA)/www
 	mkdir -p $(DATA)/db
+	mkdir -p $(DATA)/logs
+	mkdir -p $(DATA)/cache
