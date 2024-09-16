@@ -1,9 +1,12 @@
 services:
   nginx:
     container_name: ${NGINX_CONTAINER_NAME}
+    image: ${NGINX_CONTAINER_NAME}
     depends_on:
       - wordpress
-    build: ./requirements/nginx/
+    build:
+      context: ./requirements/nginx/
+      dockerfile: nginx.Dockerfile
     ports:
       # - "443:443"
       - "80:80"
@@ -15,9 +18,14 @@ services:
 
   wordpress:
     container_name: ${WP_CONTAINER_NAME}
+    image: ${WP_CONTAINER_NAME}
     depends_on:
       - mariadb
-    build: ./requirements/wordpress/
+    ports:
+      - "8080:80"
+    build:
+      context: ./requirements/wordpress/
+      dockerfile: wp.Dockerfile
     networks:
       - internal
     volumes:
@@ -28,12 +36,13 @@ services:
       - WORDPRESS_DB_USER=$WORDPRESS_DB_USER
       - WORDPRESS_DB_PASSWORD=$WORDPRESS_DB_PASSWORD
       - WORDPRESS_DB_NAME=$WORDPRESS_DB_NAME
-    secrets:
-      - db_password
 
   mariadb:
     container_name: ${DB_CONTAINER_NAME}
-    build: ./requirements/mariadb/
+    image: ${DB_CONTAINER_NAME}
+    build:
+      context: ./requirements/mariadb/
+      dockerfile: db.Dockerfile
     networks:
       - internal
     volumes:
@@ -41,25 +50,16 @@ services:
     restart: on-failure
     env_file:
       - .env
-    environment:
-      - MYSQL_HOST=mariadb
-      - MYSQL_DATABASE=$WORDPRESS_DB_NAME
-      - MYSQL_USER=$WORDPRESS_DB_USER
-      - MYSQL_PASSWORD=$WORDPRESS_DB_PASSWORD
-      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
-    secrets:
-      - db_password
-      - db_root_password
 
 networks:
   internal:
     driver: bridge
 
-secrets:
-  db_password:
-    file: ../secrets/db_password.txt
-  db_root_password:
-    file: ../secrets/db_root_password.txt
+# secrets:
+#   db_password:
+#     file: ../secrets/db_password.txt
+#   db_root_password:
+#     file: ../secrets/db_root_password.txt
 
 volumes:
   wordpress_volume:
