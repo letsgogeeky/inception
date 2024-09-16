@@ -3,9 +3,13 @@ FROM debian:bookworm-slim
 
 # Install required packages
 RUN apt-get update && apt-get install -y \
-    php-mysql \
+    php-mysqli \
     default-mysql-client \
     php-fpm \
     wget curl
 
-CMD ["php-fpm8.2", "-F"]
+COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
+COPY ./tools/wp_runner.sh /usr/local/bin/wp_runner.sh
+RUN chmod +x /usr/local/bin/wp_runner.sh
+
+CMD ["/usr/local/bin/wp_runner.sh"]
