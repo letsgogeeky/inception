@@ -1,0 +1,16 @@
+
+DOMAIN_NAME=<intra>.42.fr
+
+PROJECT_NAME=<project_name>
+
+# Containers
+DB_CONTAINER_NAME=inception-mariadb
+WP_CONTAINER_NAME=inception-wordpress
+NGINX_CONTAINER_NAME=inception-nginx
+
+# Wordpress
+WORDPRESS_DB_NAME=<project_name>-wordpress
+WORDPRESS_DB_USER=<db_user>
+WORDPRESS_DB_PASSWORD=<db_password>
+MYSQL_ROOT_PASSWORD=<root_password>
+
