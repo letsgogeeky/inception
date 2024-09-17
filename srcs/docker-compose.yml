@@ -61,6 +61,23 @@ services:
     env_file:
       - .env
 
+  ftp:
+    container_name: ${FTP_CONTAINER_NAME}
+    image: ${FTP_CONTAINER_NAME}
+    build:
+      context: ./requirements/bonus/ftp/
+      dockerfile: ftp.Dockerfile
+    networks:
+      - internal
+    restart: on-failure
+    env_file:
+      - .env
+    volumes:
+      - wordpress_volume:/home/${FTP_USER}/ftp/files
+    ports:
+      - "21:21"
+      - "30000-30009:30000-30009"
+
 networks:
   internal:
     driver: bridge

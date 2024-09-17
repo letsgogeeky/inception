@@ -41,6 +41,9 @@ ssh-wp:
 ssh-redis:
 	docker exec -it ${REDIS_CONTAINER_NAME} bash
 
+ssh-ftp:
+	docker exec -it ${FTP_CONTAINER_NAME} bash
+
 re: stop build-nc start
 
 $(DATA):

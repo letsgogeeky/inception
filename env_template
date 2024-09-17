@@ -8,6 +8,7 @@ DB_CONTAINER_NAME=<project_name>-mariadb
 WP_CONTAINER_NAME=<project_name>-wordpress
 NGINX_CONTAINER_NAME=<project_name>-nginx
 REDIS_CONTAINER_NAME=<project_name>-redis
+FTP_CONTAINER_NAME=<project_name>-ftp
 
 # Wordpress
 WORDPRESS_DB_HOST=<project_name>-mariadb:3306
@@ -25,3 +26,6 @@ MYSQL_ROOT_PASSWORD=<root_password>
 REDIS_HOST=<redis_host>
 REDIS_PORT=6379
 
+# FTP
+FTP_USER=<ftp_user>
+FTP_PASSWORD=<ftp_password>
