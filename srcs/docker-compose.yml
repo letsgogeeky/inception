@@ -23,6 +23,7 @@ services:
     ports:
       - "443:443"
       - "80:80"
+      - "8081:8081"
     networks:
       - internal
     volumes:
@@ -77,6 +78,18 @@ services:
     ports:
       - "21:21"
       - "30000-30009:30000-30009"
+
+  adminer:
+    container_name: ${ADMINER_CONTAINER_NAME}
+    image: ${ADMINER_CONTAINER_NAME}
+    build:
+      context: ./requirements/bonus/adminer/
+      dockerfile: adminer.Dockerfile
+    networks:
+      - internal
+    restart: on-failure
+    ports:
+      - "8080:81"
 
 networks:
   internal:

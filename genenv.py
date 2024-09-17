@@ -38,6 +38,7 @@ WP_CONTAINER_NAME = f"{PROJECT_NAME}-wordpress"
 NGINX_CONTAINER_NAME = f"{PROJECT_NAME}-nginx"
 REDIS_CONTAINER_NAME = f"{PROJECT_NAME}-redis"
 FTP_CONTAINER_NAME = f"{PROJECT_NAME}-ftp"
+ADMINER_CONTAINER_NAME = f"{PROJECT_NAME}-adminer"
 
 # Wordpress
 WORDPRESS_DB_HOST = f"{DB_CONTAINER_NAME}:3306"
@@ -68,6 +69,7 @@ with open(".env", "w") as env_file:
     env_file.write(f"NGINX_CONTAINER_NAME={NGINX_CONTAINER_NAME}\n")
     env_file.write(f"REDIS_CONTAINER_NAME={REDIS_CONTAINER_NAME}\n\n")
     env_file.write(f"FTP_CONTAINER_NAME={FTP_CONTAINER_NAME}\n")
+    env_file.write(f"ADMINER_CONTAINER_NAME={ADMINER_CONTAINER_NAME}\n\n")
     # Wordpress
     env_file.write(f"# Wordpress\n")
     env_file.write(f"WORDPRESS_DB_HOST={WORDPRESS_DB_HOST}\n")

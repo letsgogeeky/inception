@@ -1,4 +1,6 @@
-- When pruning the environment, remember to also remove volumes for the registry.
+### A few reminders for the wandering minds:
+
+- When pruning the environment, remember to also remove volumes from the docker volumes.
 - Both Docker images and Docker containers will end up having the same name, it's okay for now.
 - I found naming Dockerfiles in this format `<service>.Dockerfile` to have a better developer experience when navigating and opening multiple dockerfiles at the same time on an editor.
 - When Docker raises a `no such file or directory` for volumes, try restarting Docker, yes, apparently restarting Docker solves the issue!!!!!!!
@@ -23,7 +25,8 @@ SELECT user, host FROM mysql.user;
 ```
 
 - Connecting to mariadb from another container:
-    `mysql -h inception-mariadb -u $WORDPRESS_DB_USER -P 3306 -p`
+
+`mysql -h inception-mariadb -u $WORDPRESS_DB_USER -P 3306 -p`
 
 
 ## TODO:

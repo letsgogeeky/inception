@@ -19,6 +19,7 @@ COPY ./conf/nginx.conf /etc/nginx/sites-available/default
 # Expose port 443 for HTTPS traffic
 EXPOSE 80
 EXPOSE 443
+EXPOSE 8081
 
 # Start NGINX
 CMD ["nginx", "-g", "daemon off;"]
