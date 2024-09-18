@@ -6,7 +6,10 @@ RUN apt-get update && apt-get install -y \
     php-mysqli \
     default-mysql-client \
     php-fpm \
-    wget curl
+    wget curl \
+    php-redis
+
+ARG CACHEBUST=1
 
 COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 COPY ./tools/wp_runner.sh /usr/local/bin/wp_runner.sh

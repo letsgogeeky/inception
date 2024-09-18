@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# modify www.conf
+sed -i "s/\${WORDPRESS_CONTAINER_NAME}/$WP_CONTAINER_NAME/g" /etc/php/8.2/fpm/pool.d/www.conf
+
 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 chmod +x wp-cli.phar
 mv wp-cli.phar /usr/local/bin/wp
@@ -20,5 +23,16 @@ wp core install --url=$WORDPRESS_URL \
     --admin_email=$WORDPRESS_ADMIN_EMAIL \
     --allow-root
 
+# setup redis cache
+wp plugin install redis-cache --activate --allow-root
+wp plugin install nginx-helper --activate --allow-root
+
+# Add redis configuration
+wp config set WP_REDIS_HOST ${REDIS_HOST} --allow-root
+wp config set WP_REDIS_PORT ${REDIS_PORT} --allow-root
+wp config set WP_CACHE_KEY_SALT ${WORDPRESS_DB_NAME} --allow-root
+
+# Enable redis cache
+wp redis enable --allow-root
 
 php-fpm8.2 -F

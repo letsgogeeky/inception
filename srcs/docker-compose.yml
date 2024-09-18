@@ -1,4 +1,24 @@
 services:
+  redis:
+    container_name: ${REDIS_CONTAINER_NAME}
+    image: ${REDIS_CONTAINER_NAME}
+    build:
+      context: ./requirements/bonus/redis/
+      dockerfile: redis.Dockerfile
+    networks:
+      - internal
+    restart: on-failure
+    env_file:
+      - .env
+    volumes:
+      - redis_volume:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
   nginx:
     container_name: ${NGINX_CONTAINER_NAME}
     image: ${NGINX_CONTAINER_NAME}
@@ -10,6 +30,7 @@ services:
     ports:
       - "443:443"
       - "80:80"
+      - "8081:8081"
     networks:
       - internal
     volumes:
@@ -17,14 +38,18 @@ services:
     restart: on-failure
     env_file:
       - .env
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "https://localhost" ]
+      interval: 2m30s
+      timeout: 30s
+      retries: 3
+      start_period: 30s
 
   wordpress:
     container_name: ${WP_CONTAINER_NAME}
     image: ${WP_CONTAINER_NAME}
     depends_on:
       - mariadb
-    ports:
-      - "8080:80"
     build:
       context: ./requirements/wordpress/
       dockerfile: wp.Dockerfile
@@ -35,6 +60,12 @@ services:
     restart: on-failure
     env_file:
       - .env
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost" ]
+      interval: 2m30s
+      timeout: 30s
+      retries: 3
+      start_period: 30s
 
   mariadb:
     container_name: ${DB_CONTAINER_NAME}
@@ -49,6 +80,51 @@ services:
     restart: on-failure
     env_file:
       - .env
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 2m30s
+      timeout: 30s
+      retries: 3
+      start_period: 30s
+
+  ftp:
+    container_name: ${FTP_CONTAINER_NAME}
+    image: ${FTP_CONTAINER_NAME}
+    build:
+      context: ./requirements/bonus/ftp/
+      dockerfile: ftp.Dockerfile
+    networks:
+      - internal
+    restart: on-failure
+    env_file:
+      - .env
+    volumes:
+      - wordpress_volume:/home/${FTP_USER}/ftp/files
+    ports:
+      - "21:21"
+      - "30000-30009:30000-30009"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "ftp://localhost" ]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+
+  adminer:
+    container_name: ${ADMINER_CONTAINER_NAME}
+    image: ${ADMINER_CONTAINER_NAME}
+    build:
+      context: ./requirements/bonus/adminer/
+      dockerfile: adminer.Dockerfile
+    networks:
+      - internal
+    restart: on-failure
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8081" ]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
 
 networks:
   internal:
@@ -72,4 +148,10 @@ volumes:
     driver_opts:
       type: "none"
       device: "$HOME/data/inception/db"
+      o: "bind"
+  redis_volume:
+    driver: local
+    driver_opts:
+      type: "none"
+      device: "$HOME/data/inception/cache"
       o: "bind"
