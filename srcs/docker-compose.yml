@@ -12,6 +12,13 @@ services:
       - .env
     volumes:
       - redis_volume:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
   nginx:
     container_name: ${NGINX_CONTAINER_NAME}
     image: ${NGINX_CONTAINER_NAME}
@@ -31,6 +38,12 @@ services:
     restart: on-failure
     env_file:
       - .env
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "https://localhost" ]
+      interval: 2m30s
+      timeout: 30s
+      retries: 3
+      start_period: 30s
 
   wordpress:
     container_name: ${WP_CONTAINER_NAME}
@@ -47,6 +60,12 @@ services:
     restart: on-failure
     env_file:
       - .env
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost" ]
+      interval: 2m30s
+      timeout: 30s
+      retries: 3
+      start_period: 30s
 
   mariadb:
     container_name: ${DB_CONTAINER_NAME}
@@ -61,6 +80,12 @@ services:
     restart: on-failure
     env_file:
       - .env
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 2m30s
+      timeout: 30s
+      retries: 3
+      start_period: 30s
 
   ftp:
     container_name: ${FTP_CONTAINER_NAME}
@@ -78,6 +103,12 @@ services:
     ports:
       - "21:21"
       - "30000-30009:30000-30009"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "ftp://localhost" ]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
 
   adminer:
     container_name: ${ADMINER_CONTAINER_NAME}
@@ -88,8 +119,12 @@ services:
     networks:
       - internal
     restart: on-failure
-    ports:
-      - "8080:81"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8081" ]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
 
 networks:
   internal:

@@ -1,3 +1,6 @@
+### A note about Dockerfile names:
+For every service described in a dockerfile, their Dockerfile is named in this pattern `<service>.Dockerfile` ex: [nginx.Dockerfile](srcs/requirements/nginx/nginx.Dockerfile) or [ftp.Dockerfile](srcs/requirements/bonus/ftp/ftp.Dockerfile), the main reason I take this naming convention is to enhance developer experience. having multiple open Dockerfiles in your code editor feels less tedious when the file name describes what's inside of it.
+
 ### A few reminders for the wandering minds:
 
 - When pruning the environment, remember to also remove volumes from the docker volumes.
@@ -30,6 +33,5 @@ SELECT user, host FROM mysql.user;
 
 
 ## TODO:
-- write a script to replace static project name in www.conf in listen directive.
 - write a script to detect the version of php-fpm and pass it to CMD in dockerfile
 - wirte a script to generate nginx config instead of the static one to replace with env variables.
