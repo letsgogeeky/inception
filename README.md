@@ -1,5 +1,11 @@
+## A highly configurable intrastructure
+
 ### A note about Dockerfile names:
 For every service described in a dockerfile, their Dockerfile is named in this pattern `<service>.Dockerfile` ex: [nginx.Dockerfile](srcs/requirements/nginx/nginx.Dockerfile) or [ftp.Dockerfile](srcs/requirements/bonus/ftp/ftp.Dockerfile), the main reason I take this naming convention is to enhance developer experience. having multiple open Dockerfiles in your code editor feels less tedious when the file name describes what's inside of it.
+
+### Services documentations
+- [Nginx](docs/Nginx.md)
+- [MariaDB](docs/Mariadb.md)
 
 ### A few reminders for the wandering minds:
 
