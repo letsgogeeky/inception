@@ -6,6 +6,7 @@ For every service described in a dockerfile, their Dockerfile is named in this p
 ### Services documentations
 - [Nginx](docs/Nginx.md)
 - [MariaDB](docs/Mariadb.md)
+- [Prometheus](docs/Prometheus.md)
 
 ### A few reminders for the wandering minds:
 
