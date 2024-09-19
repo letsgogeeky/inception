@@ -31,6 +31,7 @@ wp plugin install nginx-helper --activate --allow-root
 wp config set WP_REDIS_HOST ${REDIS_HOST} --allow-root
 wp config set WP_REDIS_PORT ${REDIS_PORT} --allow-root
 wp config set WP_CACHE_KEY_SALT ${WORDPRESS_DB_NAME} --allow-root
+wp config set FS_METHOD direct --allow-root
 
 # Enable redis cache
 wp redis enable --allow-root

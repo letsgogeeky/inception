@@ -1,0 +1,19 @@
+groups:
+  - name: nginx_alerts
+    rules:
+      - alert: NginxIsDown
+        expr: up{job="nginx"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "FTP service is down"
+          description: "The FTP service on {{ $labels.instance }} is down for more than 1 minute."
+      - alert: NginxHighRequestLatency
+        expr: nginx_http_request_duration_seconds_bucket{le="0.5"} > 0.1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High request latency"
+          description: "Request latency is too high on nginx."
