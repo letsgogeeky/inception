@@ -36,4 +36,7 @@ wp config set FS_METHOD direct --allow-root
 # Enable redis cache
 wp redis enable --allow-root
 
+# Add an editor user
+wp user create $WORDPRESS_EDITOR_USER $WORDPRESS_EDITOR_EMAIL --role=editor --user_pass=$WORDPRESS_EDITOR_PASSWORD --allow-root
+
 php-fpm8.2 -F

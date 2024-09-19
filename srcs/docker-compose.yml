@@ -126,6 +126,18 @@ services:
       retries: 5
       start_period: 30s
 
+  portfolio:
+    container_name: ${PORTFOLIO_CONTAINER_NAME}
+    image: ${PORTFOLIO_CONTAINER_NAME}
+    build:
+      context: ./requirements/bonus/portfolio/
+      dockerfile: portfolio.Dockerfile
+    networks:
+      - internal
+    ports:
+      - "8080:8080"
+    restart: on-failure
+
   nginx-exporter:
     container_name: ${NGINX_EXPORTER_CONTAINER_NAME}
     image: ${NGINX_EXPORTER_CONTAINER_NAME}
