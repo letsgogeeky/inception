@@ -1,7 +1,8 @@
 FROM debian:stable
 
 # Install NGINX
-RUN apt-get update && apt-get install -y nginx openssl curl
+RUN apt-get update && apt-get install -y \
+    nginx openssl curl
 
 # Generate a self-signed SSL certificate
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \

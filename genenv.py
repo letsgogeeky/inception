@@ -39,6 +39,9 @@ NGINX_CONTAINER_NAME = f"{PROJECT_NAME}-nginx"
 REDIS_CONTAINER_NAME = f"{PROJECT_NAME}-redis"
 FTP_CONTAINER_NAME = f"{PROJECT_NAME}-ftp"
 ADMINER_CONTAINER_NAME = f"{PROJECT_NAME}-adminer"
+PROMETHEUS_CONTAINER_NAME = f"{PROJECT_NAME}-prometheus"
+NGINX_EXPORTER_CONTAINER_NAME = f"{PROJECT_NAME}-nginx-exporter"
+PORTFOLIO_CONTAINER_NAME= f"{PROJECT_NAME}-portfolio"
 
 # Wordpress
 WORDPRESS_DB_HOST = f"{DB_CONTAINER_NAME}:3306"
@@ -52,6 +55,10 @@ WORDPRESS_ADMIN_USER = prompt_input("Enter WORDPRESS_ADMIN_USER (e.g., ramoussa)
 print("Enter WORDPRESS_ADMIN_PASSWORD (at least 8 characters long)")
 WORDPRESS_ADMIN_PASSWORD = prompt_password()
 WORDPRESS_ADMIN_EMAIL = prompt_input("Enter WORDPRESS_ADMIN_EMAIL (e.g., anything@gmail.com): ")
+WORDPRESS_EDITOR_USER = prompt_input("Enter WORDPRESS_EDITOR_USER (e.g., editor): ", "editor")
+print("Enter WORDPRESS_EDITOR_PASSWORD (at least 8 characters long)")
+WORDPRESS_EDITOR_PASSWORD = prompt_password()
+WORDPRESS_EDITOR_EMAIL = prompt_input("Enter WORDPRESS_EDITOR_EMAIL (e.g., anything@editors.com): ", "")
 print("Enter MYSQL_ROOT_PASSWORD (at least 8 characters long)")
 MYSQL_ROOT_PASSWORD = prompt_password()
 FTP_USER = prompt_input("Enter FTP_USER (e.g., ftpuser): ", "ftpuser")
@@ -67,9 +74,12 @@ with open(".env", "w") as env_file:
     env_file.write(f"DB_CONTAINER_NAME={DB_CONTAINER_NAME}\n")
     env_file.write(f"WP_CONTAINER_NAME={WP_CONTAINER_NAME}\n")
     env_file.write(f"NGINX_CONTAINER_NAME={NGINX_CONTAINER_NAME}\n")
-    env_file.write(f"REDIS_CONTAINER_NAME={REDIS_CONTAINER_NAME}\n\n")
+    env_file.write(f"REDIS_CONTAINER_NAME={REDIS_CONTAINER_NAME}\n")
     env_file.write(f"FTP_CONTAINER_NAME={FTP_CONTAINER_NAME}\n")
-    env_file.write(f"ADMINER_CONTAINER_NAME={ADMINER_CONTAINER_NAME}\n\n")
+    env_file.write(f"ADMINER_CONTAINER_NAME={ADMINER_CONTAINER_NAME}\n")
+    env_file.write(f"PROMETHEUS_CONTAINER_NAME={PROMETHEUS_CONTAINER_NAME}\n")
+    env_file.write(f"NGINX_EXPORTER_CONTAINER_NAME={NGINX_EXPORTER_CONTAINER_NAME}\n\n")
+    env_file.write(f"PORTFOLIO_CONTAINER_NAME={PORTFOLIO_CONTAINER_NAME}\n\n")
     # Wordpress
     env_file.write(f"# Wordpress\n")
     env_file.write(f"WORDPRESS_DB_HOST={WORDPRESS_DB_HOST}\n")
@@ -81,6 +91,9 @@ with open(".env", "w") as env_file:
     env_file.write(f"WORDPRESS_ADMIN_USER={WORDPRESS_ADMIN_USER}\n")
     env_file.write(f"WORDPRESS_ADMIN_PASSWORD={WORDPRESS_ADMIN_PASSWORD}\n")
     env_file.write(f"WORDPRESS_ADMIN_EMAIL={WORDPRESS_ADMIN_EMAIL}\n")
+    env_file.write(f"WORDPRESS_EDITOR_USER={WORDPRESS_EDITOR_USER}\n")
+    env_file.write(f"WORDPRESS_EDITOR_PASSWORD={WORDPRESS_EDITOR_PASSWORD}\n")
+    env_file.write(f"WORDPRESS_EDITOR_EMAIL={WORDPRESS_EDITOR_EMAIL}\n")
     env_file.write(f"MYSQL_ROOT_PASSWORD={MYSQL_ROOT_PASSWORD}\n\n")
     # Redis
     env_file.write(f"# Redis\n")
