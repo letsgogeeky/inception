@@ -152,6 +152,18 @@ services:
       - nginx
     restart: on-failure
 
+  node-exporter:
+    container_name: ${NODE_EXPORTER_CONTAINER_NAME}
+    image: ${NODE_EXPORTER_CONTAINER_NAME}
+    build:
+      context: ./requirements/bonus/observers/node-exporter/
+      dockerfile: node-exporter.Dockerfile
+    networks:
+      - internal
+    ports:
+      - "9100:9100"
+    restart: on-failure
+
   prometheus:
     container_name: ${PROMETHEUS_CONTAINER_NAME}
     image: ${PROMETHEUS_CONTAINER_NAME}
@@ -170,7 +182,16 @@ services:
       - ftp
       - adminer
       - nginx-exporter
+      - node-exporter
     restart: on-failure
+
+  grafana:
+    image: grafana/grafana-oss
+    container_name: inception-grafana
+    networks:
+      - internal
+    ports:
+      - "3000:3000"
 
 networks:
   internal:
