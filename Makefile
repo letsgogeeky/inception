@@ -7,27 +7,28 @@ DATA = ~/data/${PROJECT_NAME}
 COMPOSE_FILE := ./srcs/docker-compose.yml
 
 build:
-	docker-compose -f ${COMPOSE_FILE} build
+	docker compose -f ${COMPOSE_FILE} build
 
 build-nc:
-	docker-compose -f ${COMPOSE_FILE} build --no-cache
+	docker compose -f ${COMPOSE_FILE} build --no-cache
 
 start: $(DATA) build
-	docker-compose -f ${COMPOSE_FILE} up -d
+	docker compose -f ${COMPOSE_FILE} up -d
 
 stop:
-	docker-compose -f ${COMPOSE_FILE} down
+	docker compose -f ${COMPOSE_FILE} down
 
 clean:
-	docker-compose -f ${COMPOSE_FILE} down -v
+	docker compose -f ${COMPOSE_FILE} down -v
 	rm -rf $(DATA)
 
 fclean: clean
-	docker rmi ${WP_CONTAINER_NAME} ${DB_CONTAINER_NAME} ${NGINX_CONTAINER_NAME}
+	docker rmi ${WP_CONTAINER_NAME} ${DB_CONTAINER_NAME} ${NGINX_CONTAINER_NAME} ${FTP_CONTAINER_NAME} ${REDIS_CONTAINER_NAME} \
+		${GRAFANA_CONTAINER_NAME}
 # docker volume rm srcs_mariadb_volume srcs_wordpress_volume
 
 logs:
-	docker-compose -f ${COMPOSE_FILE} logs -f
+	docker compose -f ${COMPOSE_FILE} logs -f
 
 ssh-nginx:
 	docker exec -it ${NGINX_CONTAINER_NAME} bash

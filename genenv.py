@@ -41,6 +41,7 @@ FTP_CONTAINER_NAME = f"{PROJECT_NAME}-ftp"
 ADMINER_CONTAINER_NAME = f"{PROJECT_NAME}-adminer"
 PROMETHEUS_CONTAINER_NAME = f"{PROJECT_NAME}-prometheus"
 NGINX_EXPORTER_CONTAINER_NAME = f"{PROJECT_NAME}-nginx-exporter"
+NODE_EXPORTER_CONTAINER_NAME = f"{PROJECT_NAME}-node-exporter"
 PORTFOLIO_CONTAINER_NAME= f"{PROJECT_NAME}-portfolio"
 
 # Wordpress
@@ -79,6 +80,7 @@ with open(".env", "w") as env_file:
     env_file.write(f"ADMINER_CONTAINER_NAME={ADMINER_CONTAINER_NAME}\n")
     env_file.write(f"PROMETHEUS_CONTAINER_NAME={PROMETHEUS_CONTAINER_NAME}\n")
     env_file.write(f"NGINX_EXPORTER_CONTAINER_NAME={NGINX_EXPORTER_CONTAINER_NAME}\n\n")
+    env_file.write(f"NODE_EXPORTER_CONTAINER_NAME={NODE_EXPORTER_CONTAINER_NAME}\n")
     env_file.write(f"PORTFOLIO_CONTAINER_NAME={PORTFOLIO_CONTAINER_NAME}\n\n")
     # Wordpress
     env_file.write(f"# Wordpress\n")
