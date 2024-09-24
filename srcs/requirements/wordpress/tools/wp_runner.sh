@@ -11,6 +11,11 @@ mv wp-cli.phar /usr/local/bin/wp
 cd /var/www/html
 wp core download --allow-root
 
+# wait for mariadb to be ready
+while ! mysqladmin ping -h"$WORDPRESS_DB_HOST" --silent; do
+	sleep 1
+done
+
 wp config create --dbname=$WORDPRESS_DB_NAME \
     --dbuser=$WORDPRESS_DB_USER \
     --dbpass=$WORDPRESS_DB_PASSWORD \
