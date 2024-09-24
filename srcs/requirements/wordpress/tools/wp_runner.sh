@@ -12,7 +12,7 @@ cd /var/www/html
 wp core download --allow-root
 
 # wait for mariadb to be ready
-while ! mysqladmin ping -h"$WORDPRESS_DB_HOST" -u "$WORDPRESS_DB_USER" -p "$WORDPRESS_DB_PASSWORD" --silent; do
+while ! mysqladmin ping -h"$DB_CONTAINER_NAME" -u"$WORDPRESS_DB_USER" -p"$WORDPRESS_DB_PASSWORD" --silent; do
 	echo "Waiting for MariaDB to be ready..."
 	sleep 1
 done
