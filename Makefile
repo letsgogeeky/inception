@@ -6,6 +6,8 @@ endif
 DATA = ~/data/${PROJECT_NAME}
 COMPOSE_FILE := ./srcs/docker-compose.yml
 
+all: start
+
 build:
 	docker compose -f ${COMPOSE_FILE} build
 
@@ -45,7 +47,7 @@ ssh-redis:
 ssh-ftp:
 	docker exec -it ${FTP_CONTAINER_NAME} bash
 
-re: stop build-nc start
+re: stop start
 
 $(DATA):
 	mkdir -p $(DATA)
@@ -53,3 +55,6 @@ $(DATA):
 	mkdir -p $(DATA)/db
 	mkdir -p $(DATA)/logs
 	mkdir -p $(DATA)/cache
+	mkdir -p $(DATA)/observe
+
+.PHONY: all build build-nc start stop clean fclean logs ssh-nginx ssh-db ssh-wp ssh-redis ssh-ftp re

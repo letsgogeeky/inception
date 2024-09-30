@@ -192,6 +192,11 @@ services:
       - internal
     ports:
       - "3000:3000"
+    depends_on:
+      - prometheus
+    restart: on-failure
+    volumes:
+      - observability_volume:/var/lib/grafana
 
 networks:
   internal:
@@ -221,4 +226,10 @@ volumes:
     driver_opts:
       type: "none"
       device: "$HOME/data/inception/cache"
+      o: "bind"
+  observability_volume:
+    driver: local
+    driver_opts:
+      type: "none"
+      device: "$HOME/data/inception/observe"
       o: "bind"
