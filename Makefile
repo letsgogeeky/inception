@@ -56,5 +56,10 @@ $(DATA):
 	mkdir -p $(DATA)/logs
 	mkdir -p $(DATA)/cache
 	mkdir -p $(DATA)/observe
+	chmod 777 $(DATA)/www
+	chmod 777 $(DATA)/db
+	chmod 777 $(DATA)/logs
+	chmod 777 $(DATA)/cache
+	chmod 777 $(DATA)/observe
 
 .PHONY: all build build-nc start stop clean fclean logs ssh-nginx ssh-db ssh-wp ssh-redis ssh-ftp re
