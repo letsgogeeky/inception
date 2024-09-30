@@ -7,7 +7,8 @@ RUN apt-get update && apt-get install -y \
     default-mysql-client \
     php-fpm \
     wget curl \
-    php-redis
+    php-redis \
+	redis-tools
 
 ARG CACHEBUST=1
 

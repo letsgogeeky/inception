@@ -36,17 +36,25 @@ wp user create $WORDPRESS_EDITOR_USER $WORDPRESS_EDITOR_EMAIL --role=editor --us
 wp plugin install redis-cache --activate --allow-root
 # wp plugin install nginx-helper --activate --allow-root
 
-
-# Enable redis cache
-wp redis enable
-
-# Check if redis is enabled
-wp redis status
+# Wait for Redis to be available
+echo "Waiting for Redis..."
+until redis-cli -h ${REDIS_HOST} -p ${REDIS_PORT} ping; do
+  echo "Redis is unavailable - sleeping"
+  sleep 1
+done
+echo "Redis is up - executing command"
 
 # Add redis configuration
 wp config set WP_REDIS_HOST ${REDIS_HOST} --allow-root
 wp config set WP_REDIS_PORT ${REDIS_PORT} --allow-root
 wp config set FS_METHOD direct --allow-root
-# wp config set WP_CACHE_KEY_SALT ${WORDPRESS_DB_NAME} --allow-root
+wp config set WP_CACHE_KEY_SALT ${WORDPRESS_DB_NAME} --allow-root
+
+# Enable redis cache
+wp redis enable --allow-root
+
+# Check if redis is enabled
+wp redis status --allow-root
+
 
 php-fpm8.2 -F
