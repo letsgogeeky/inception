@@ -29,24 +29,24 @@ wp core install --url=$WORDPRESS_URL \
     --admin_email=$WORDPRESS_ADMIN_EMAIL \
     --allow-root
 
+# Add an editor user
+wp user create $WORDPRESS_EDITOR_USER $WORDPRESS_EDITOR_EMAIL --role=editor --user_pass=$WORDPRESS_EDITOR_PASSWORD --allow-root
+
 # setup redis cache
 wp plugin install redis-cache --activate --allow-root
-wp plugin install nginx-helper --activate --allow-root
+# wp plugin install nginx-helper --activate --allow-root
 
 
 # Enable redis cache
-wp redis enable --allow-root
+wp redis enable
 
 # Check if redis is enabled
-wp redis status --allow-root
+wp redis status
 
 # Add redis configuration
 wp config set WP_REDIS_HOST ${REDIS_HOST} --allow-root
 wp config set WP_REDIS_PORT ${REDIS_PORT} --allow-root
+wp config set FS_METHOD direct --allow-root
 # wp config set WP_CACHE_KEY_SALT ${WORDPRESS_DB_NAME} --allow-root
-# wp config set FS_METHOD direct --allow-root
-
-# Add an editor user
-wp user create $WORDPRESS_EDITOR_USER $WORDPRESS_EDITOR_EMAIL --role=editor --user_pass=$WORDPRESS_EDITOR_PASSWORD --allow-root
 
 php-fpm8.2 -F
