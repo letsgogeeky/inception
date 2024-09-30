@@ -12,9 +12,6 @@ services:
       - .env
     volumes:
       - redis_volume:/data
-    depends_on:
-      wordpress:
-        condition: service_healthy
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
       interval: 1m30s
@@ -53,6 +50,7 @@ services:
     image: ${WP_CONTAINER_NAME}
     depends_on:
       - mariadb
+      - redis
     build:
       context: ./requirements/wordpress/
       dockerfile: wp.Dockerfile
